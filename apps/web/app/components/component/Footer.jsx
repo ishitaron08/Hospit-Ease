@@ -9,15 +9,13 @@ export default function Footer() {
           <div>
             <h2 className="text-lg font-semibold mb-4">Contact Us</h2>
             <p className="text-sm">
-              Punjab Health Systems Corporation,
+              Lovely Professional University, Phagwara
               <br />
-              Punjab School Education Board Building,
+              Punjab, India
               <br />
-              Block E, Phase-8, Sahibjada Ajit Singh Nagar, Mohali-16
+              Ph No. - 9528614140
               <br />
-              0172 - 2232243 & 2232245
-              <br />
-              itcell.phsc[AT]gmail[DOT]com
+              ishitaron08@gmail.com
             </p>
           </div>
           <div>

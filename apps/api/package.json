@@ -24,6 +24,6 @@
     "@types/bcrypt": "^5.0.2",
     "@types/ws": "^8.5.12",
     "prisma": "^5.19.1",
-    "wrangler": "^3.78.3"
+    "wrangler": "^4.61.1"
   }
 }
