@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Patient {
+  patientId String   @id @default(uuid())
+  name      String
+  contact   String
+  tokens    Token[]
+}
+
+model User {
+  userId    String @id @default(uuid())
+  useremail String @unique
+  password  String
+  username  String
+}
+
+model Admin {
+  adminId  String @id @default(uuid())
+  username String
+  password String
+}
+
+model Hospital {
+  hospitalId      String   @id @default(uuid())
+  hospitalName    String
+  hospitalAddress String   @default("Delhi")
+  doctors         Doctor[]
+}
+
+model Doctor {
+  doctorId     String   @id @default(uuid())
+  name         String
+  hospitalId   String
+  slotDuration Int      @default(60)
+  maxPerSlot   Int      @default(10)
+  hospital     Hospital @relation(fields: [hospitalId], references: [hospitalId])
+  tokens       Token[]
+}
+
+model Token {
+  tokenId     String      @id @default(uuid())
+  tokenNumber Int
+  patientId   String
+  doctorId    String
+  slotStart   DateTime
+  source      TokenSource
+  status      TokenStatus @default(QUEUED)
+  createdAt   DateTime    @default(now())
+  patient     Patient     @relation(fields: [patientId], references: [patientId])
+  doctor      Doctor      @relation(fields: [doctorId], references: [doctorId])
+}
+
+enum TokenSource {
+  ONLINE
+  WALKIN
+  PRIORITY
+  FOLLOWUP
+}
+
+enum TokenStatus {
+  QUEUED
+  CALLED
+  COMPLETED
+  CANCELLED
+  NOSHOW
+}

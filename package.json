@@ -1,0 +1,33 @@
+{
+  "private": true,
+  "prisma": {
+    "schema": "packages/database/prisma/schema.prisma",
+    "seed": "tsx packages/database/src/seed.ts"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "format": "prettier --write \"**/*.{js,jsx,md,ts,tsx}\"",
+    "generate": "turbo run generate",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "husky": "^9.1.5",
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.5.14",
+    "prisma": "5.10.2",
+    "turbo": "^2.1.1"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "name": "with-prisma",
+  "dependencies": {
+    "@prisma/client": "5.10.2",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.5.4",
+    "react-icons": "^5.3.0",
+    "tailwind-merge": "^2.5.2"
+  },
+  "packageManager": "pnpm@9.9.0"
+}

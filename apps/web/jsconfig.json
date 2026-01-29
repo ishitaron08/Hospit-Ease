@@ -1,0 +1,15 @@
+{
+  "include": [
+    "next.config.js",
+    "**/*.js",
+    "**/*.jsx",
+    ".next/types/**/*.js",
+    ".next/types/**/*.jsx"
+  ],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./app/*"],
+    }
+  }
+}
