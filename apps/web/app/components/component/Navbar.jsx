@@ -23,14 +23,20 @@ export default function Header() {
         </Link>
 
         <nav className="hidden md:flex space-x-6">
-          <Link href="#" className="text-gray-600 hover:text-emerald-600">
+          <Link href="/" className="text-gray-600 hover:text-emerald-600">
             Home
           </Link>
-          <Link href="#" className="text-gray-600 hover:text-emerald-600">
-            About
+          <Link
+            href="/hospitals"
+            className="text-gray-600 hover:text-emerald-600"
+          >
+            Hospitals
           </Link>
-          <Link href="#" className="text-gray-600 hover:text-emerald-600">
-            Services
+          <Link
+            href="/token-status"
+            className="text-gray-600 hover:text-emerald-600"
+          >
+            Check Token Status
           </Link>
           <Link href="#" className="text-gray-600 hover:text-emerald-600">
             Contact
@@ -47,7 +53,10 @@ export default function Header() {
         </div>
 
         {/* Mobile menu button */}
-        <button className="md:hidden text-gray-600 hover:text-gray-800">
+        <button
+          className="md:hidden text-gray-600 hover:text-gray-800"
+          onClick={() => setIsOpen(!isOpen)}
+        >
           <svg
             className="h-6 w-6"
             fill="none"
@@ -63,6 +72,30 @@ export default function Header() {
           </svg>
         </button>
       </div>
+
+      {/* Mobile menu */}
+      {isOpen && (
+        <div className="md:hidden bg-white border-t px-4 py-4 space-y-3">
+          <Link href="/" className="block text-gray-600 hover:text-emerald-600">
+            Home
+          </Link>
+          <Link
+            href="/hospitals"
+            className="block text-gray-600 hover:text-emerald-600"
+          >
+            Hospitals
+          </Link>
+          <Link
+            href="/token-status"
+            className="block text-gray-600 hover:text-emerald-600"
+          >
+            Check Token Status
+          </Link>
+          <Link href="#" className="block text-gray-600 hover:text-emerald-600">
+            Contact
+          </Link>
+        </div>
+      )}
     </header>
   );
 }

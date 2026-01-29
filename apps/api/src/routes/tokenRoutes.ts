@@ -162,6 +162,75 @@ tokenRouter.post("/token/:id/complete", async (c) => {
   return c.json(token);
 });
 
+// Get token status by contact number
+tokenRouter.get("/token/status/:contact", async (c) => {
+  const prisma = getPrisma(c.env.DATABASE_URL);
+  const contact = c.req.param("contact");
+
+  const patient = await prisma.patient.findFirst({
+    where: { contact },
+  });
+
+  if (!patient) {
+    return c.json([]);
+  }
+
+  const tokens = await prisma.token.findMany({
+    where: {
+      patientId: patient.patientId,
+    },
+    include: {
+      patient: true,
+      doctor: true,
+    },
+    orderBy: { createdAt: "desc" },
+  });
+
+  // Calculate queue position for queued tokens
+  const tokensWithPosition = await Promise.all(
+    tokens.map(async (token) => {
+      if (token.status === "QUEUED") {
+        const queueAhead = await prisma.token.count({
+          where: {
+            doctorId: token.doctorId,
+            slotStart: token.slotStart,
+            status: "QUEUED",
+            tokenNumber: { lt: token.tokenNumber },
+          },
+        });
+        return { ...token, queuePosition: queueAhead };
+      }
+      return token;
+    }),
+  );
+
+  return c.json(tokensWithPosition);
+});
+
+// Get all patients (for emergency page dropdown)
+tokenRouter.get("/patients", async (c) => {
+  const prisma = getPrisma(c.env.DATABASE_URL);
+
+  const patients = await prisma.patient.findMany({
+    orderBy: { name: "asc" },
+    take: 100,
+  });
+
+  return c.json(patients);
+});
+
+// Create a new patient
+tokenRouter.post("/patients", async (c) => {
+  const prisma = getPrisma(c.env.DATABASE_URL);
+  const { name, contact } = await c.req.json();
+
+  const patient = await prisma.patient.create({
+    data: { name, contact },
+  });
+
+  return c.json(patient);
+});
+
 async function reorderQueue(
   prisma: ReturnType<typeof getPrisma>,
   doctorId: string,

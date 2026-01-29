@@ -27,7 +27,7 @@ export default function LoginPage() {
       alert("Kindly signup again");
     } else {
       sessionStorage.setItem("token", token);
-      router.push("dashboard");
+      router.push("/admin/dashboard");
     }
   };
   return (
